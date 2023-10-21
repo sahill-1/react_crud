@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Create from './Create';
+import Read from './Read';
+import Update from './Update';
+import Delete from './Delete';
 
-function App() {
+const App = () => {
+  const [todos, setTodos] = useState([]);
+
+  const addTodo = (text) => {
+    setTodos([...todos, text]);
+  };
+
+  const updateTodo = (index, text) => {
+    const updatedTodos = [...todos];
+    updatedTodos[index] = text;
+    setTodos(updatedTodos);
+  };
+
+  const deleteTodo = (index) => {
+    const updatedTodos = todos.filter((todo, i) => i !== parseInt(index));
+    setTodos(updatedTodos);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Create addTodo={addTodo} />
+      <Read todos={todos} />
+      <Update todos={todos} updateTodo={updateTodo} />
+      <Delete deleteTodo={deleteTodo} />
     </div>
   );
-}
+};
 
 export default App;
